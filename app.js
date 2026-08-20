@@ -65,9 +65,9 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 }
 
 
-function initialsAvatar(name, colorA = '#8b7bff', colorB = '#5ee7d7') {
+function initialsAvatar(name, colorA = '#ef233c', colorB = '#8f1023') {
   const initial = (name || 'E').trim().charAt(0).toUpperCase();
-  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="' + colorA + '"/><stop offset="1" stop-color="' + colorB + '"/></linearGradient></defs><rect width="96" height="96" rx="26" fill="url(%23g)"/><text x="48" y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="42" font-weight="800" fill="%23071014">' + initial + '</text></svg>';
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="' + colorA + '"/><stop offset="1" stop-color="' + colorB + '"/></linearGradient></defs><rect width="96" height="96" rx="26" fill="url(%23g)"/><text x="48" y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="42" font-weight="800" fill="%23ffffff">' + initial + '</text></svg>';
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
