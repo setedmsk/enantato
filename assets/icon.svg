@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">Enantato</title>
-  <desc id="desc">Símbolo E em verde água sobre fundo escuro.</desc>
+  <desc id="desc">Símbolo E vermelho sobre fundo preto.</desc>
   <defs>
     <linearGradient id="background" x1="48" y1="32" x2="464" y2="480" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#171e2b"/><stop offset="1" stop-color="#080b12"/>
+      <stop stop-color="#171719"/><stop offset="1" stop-color="#050505"/>
     </linearGradient>
     <linearGradient id="accent" x1="138" y1="120" x2="376" y2="392" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#bafff7"/><stop offset=".52" stop-color="#5ee7d7"/><stop offset="1" stop-color="#7df0bc"/>
+      <stop stop-color="#ff697a"/><stop offset=".52" stop-color="#ef233c"/><stop offset="1" stop-color="#8f1023"/>
     </linearGradient>
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="16" result="blur"/>
-      <feColorMatrix in="blur" values="0 0 0 0 0.37 0 0 0 0 0.91 0 0 0 0 0.84 0 0 0 .35 0"/>
+      <feColorMatrix in="blur" values="0 0 0 0 .94 0 0 0 0 .14 0 0 0 0 .24 0 0 0 .38 0"/>
       <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
