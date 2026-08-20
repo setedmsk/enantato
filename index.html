@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="Enantato — seu espaço privado para conversar, jogar e compartilhar.">
+  <title>Enantato</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <section class="login-screen" id="loginScreen" aria-labelledby="loginTitle">
+    <div class="login-brand"><span class="brand-mark">E</span><span>enantato</span></div>
+    <form class="login-card" id="loginForm">
+      <span class="eyebrow">SEU ESPAÇO. SUAS REGRAS.</span>
+      <h1 id="loginTitle">Entre para encontrar sua turma.</h1>
+      <p>Uma casa digital privada para conversar, assistir e compartilhar em alta qualidade.</p>
+      <label>Como quer ser chamado?
+        <input id="loginName" autocomplete="nickname" maxlength="24" placeholder="Seu nome" required>
+      </label>
+      <label>Emoji do status
+        <div class="status-input"><input id="loginEmoji" maxlength="4" value="🎮"><span>Disponível</span></div>
+      </label>
+      <button class="primary-button" type="submit">Entrar no espaço <span>→</span></button>
+      <small>Este protótipo guarda o perfil apenas neste navegador.</small>
+    </form>
+  </section>
+
+  <div class="app-shell is-hidden" id="appShell">
+    <aside class="server-rail" aria-label="Servidores">
+      <button class="server-button home active" aria-label="Início">E</button>
+      <span class="rail-divider"></span>
+      <button class="server-button server-photo" data-server="Nexus" aria-label="Nexus">NX</button>
+      <button class="server-button" data-server="After" aria-label="After">AF</button>
+      <button class="server-button" data-server="Lounge" aria-label="Lounge">☕</button>
+      <button class="server-button add-server" id="addServer" aria-label="Adicionar servidor">+</button>
+      <div class="rail-spacer"></div>
+      <span class="connection-dot" title="Sistema operacional"></span>
+    </aside>
+
+    <aside class="channel-sidebar">
+      <header class="workspace-header">
+        <div><small>ESPAÇO PRIVADO</small><strong id="serverName">Nexus House</strong></div>
+        <button class="icon-button" aria-label="Menu do servidor">•••</button>
+      </header>
+
+      <nav class="channel-list" aria-label="Canais">
+        <button class="nav-item active" data-view="inicio"><span>⌂</span> Visão geral</button>
+        <button class="nav-item" data-view="eventos"><span>✦</span> Eventos <b>2</b></button>
+        <div class="channel-heading"><span>CANAIS DE TEXTO</span><button aria-label="Novo canal">+</button></div>
+        <button class="channel active" data-channel="geral"><span>#</span> geral</button>
+        <button class="channel" data-channel="clips"><span>#</span> clips-e-memes</button>
+        <button class="channel" data-channel="setup"><span>#</span> setups</button>
+        <div class="channel-heading"><span>SALAS DE VOZ</span><button aria-label="Nova sala">+</button></div>
+        <button class="voice-channel active" data-room="Sala principal">
+          <span class="voice-icon">◖</span><span><strong>Sala principal</strong><small>3 conectados</small></span>
+        </button>
+        <div class="voice-users">
+          <span class="mini-avatar cyan">M</span><span>Mika</span><i>falando</i>
+          <span class="mini-avatar purple">L</span><span>Lune</span>
+          <span class="mini-avatar orange">K</span><span>Kairo</span>
+        </div>
+        <button class="voice-channel" data-room="Modo foco">
+          <span class="voice-icon">◖</span><span><strong>Modo foco</strong><small>Sala silenciosa</small></span>
+        </button>
+      </nav>
+
+      <footer class="profile-dock">
+        <button class="profile-summary" id="openProfile">
+          <span class="avatar-wrap"><img id="dockAvatar" alt=""><i class="online"></i></span>
+          <span><strong id="dockName">Você</strong><small id="dockStatus">🎮 Disponível</small></span>
+        </button>
+        <button class="dock-control" id="micButton" aria-label="Microfone">◉</button>
+        <button class="dock-control" id="deafenButton" aria-label="Áudio">◒</button>
+        <button class="dock-control" id="settingsButton" aria-label="Configurações">⚙</button>
+      </footer>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div class="channel-title"><span>#</span><div><strong id="channelTitle">geral</strong><small id="channelSubtitle">Onde tudo acontece</small></div></div>
+        <div class="top-actions">
+          <button class="icon-button search-button" aria-label="Pesquisar">⌕ <span>Pesquisar</span></button>
+          <button class="icon-button" aria-label="Caixa de entrada">▱</button>
+          <button class="share-button" id="shareScreen"><span>▣</span> Compartilhar tela</button>
+        </div>
+      </header>
+
+      <section class="stage is-hidden" id="stage">
+        <div class="stage-head">
+          <div><span class="live-dot"></span><strong>TRANSMISSÃO AO VIVO</strong><small id="qualityLabel">1080p · 60 FPS</small></div>
+          <div class="stage-actions">
+            <select id="qualitySelect" aria-label="Qualidade">
+              <option value="720">720p · 30 FPS</option>
+              <option value="1080" selected>1080p · 60 FPS</option>
+              <option value="1440">1440p · 60 FPS</option>
+              <option value="2160">4K · 60 FPS</option>
+            </select>
+            <button class="danger-button" id="stopShare">Encerrar</button>
+          </div>
+        </div>
+        <div class="video-frame">
+          <video id="screenPreview" autoplay muted playsinline></video>
+          <div class="video-empty" id="videoEmpty"><span>▣</span><strong>Sua tela aparecerá aqui</strong><small>Escolha uma janela, aba ou monitor para começar.</small></div>
+        </div>
+      </section>
+
+      <section class="chat" id="chatView">
+        <div class="welcome-card">
+          <span class="welcome-icon">#</span>
+          <div><span class="eyebrow">BEM-VINDO AO CANAL</span><h2 id="welcomeTitle">Começo de #geral</h2><p>O ponto de encontro da casa. Chegue, conte o que está jogando e chame a galera.</p></div>
+        </div>
+        <div class="date-divider"><span>HOJE</span></div>
+        <div class="messages" id="messages" aria-live="polite"></div>
+      </section>
+
+      <form class="composer" id="messageForm">
+        <button type="button" class="attach-button" aria-label="Anexar">+</button>
+        <textarea id="messageInput" rows="1" maxlength="1200" placeholder="Conversar em #geral"></textarea>
+        <div class="composer-actions">
+          <button type="button" aria-label="GIF">GIF</button>
+          <button type="button" aria-label="Emoji">☺</button>
+          <button type="submit" class="send-button" aria-label="Enviar">↑</button>
+        </div>
+      </form>
+    </main>
+
+    <aside class="members-panel">
+      <div class="panel-heading"><span>NA SALA — 3</span><button aria-label="Ocultar membros">→</button></div>
+      <div class="room-card">
+        <div class="room-visual"><span class="wave"></span><span class="wave delay"></span><strong>◖</strong></div>
+        <div><small>VOCÊ ESTÁ EM</small><strong>Sala principal</strong><span><i class="live-dot"></i> Voz conectada</span></div>
+      </div>
+      <h3>FALANDO AGORA</h3>
+      <button class="member speaking"><span class="member-avatar cyan">M</span><span><strong>Mika</strong><small>editando vídeo</small></span><i>)))</i></button>
+      <h3>ONLINE — 4</h3>
+      <button class="member"><span class="member-avatar purple">L</span><span><strong>Lune</strong><small>🌙 no mundo da lua</small></span><i class="member-status"></i></button>
+      <button class="member"><span class="member-avatar orange">K</span><span><strong>Kairo</strong><small>🎧 ouvindo lo-fi</small></span><i class="member-status"></i></button>
+      <button class="member"><span class="member-avatar lime">N</span><span><strong>Nori</strong><small>🍜 pausa estratégica</small></span><i class="member-status away"></i></button>
+      <div class="activity-card">
+        <span class="eyebrow">PRÓXIMO EVENTO</span><strong>Noite de jogos</strong><p>Sexta, 21:30</p><div><span>4 confirmados</span><button>Participar</button></div>
+      </div>
+    </aside>
+  </div>
+
+  <dialog class="profile-modal" id="profileModal">
+    <form method="dialog" id="profileForm">
+      <div class="profile-banner" id="profileBanner">
+        <button class="modal-close" value="cancel" aria-label="Fechar">×</button>
+        <div class="profile-avatar-large"><img id="profileAvatarPreview" alt="Prévia do avatar"><span>GIF</span></div>
+      </div>
+      <div class="profile-form-body">
+        <span class="eyebrow">PERSONALIZAR PERFIL</span><h2>Deixe com a sua cara.</h2>
+        <label>Nome de exibição<input id="profileName" maxlength="24" required></label>
+        <label>URL do avatar ou GIF<input id="profileAvatar" type="url" placeholder="https://.../avatar.gif"></label>
+        <label>URL do banner ou GIF<input id="profileBannerUrl" type="url" placeholder="https://.../banner.gif"></label>
+        <div class="form-grid">
+          <label>Emoji<input id="profileEmoji" maxlength="4"></label>
+          <label>Status<input id="profileStatus" maxlength="32"></label>
+        </div>
+        <label>Sobre você<textarea id="profileBio" maxlength="160" rows="3" placeholder="Conte um pouco sobre você"></textarea></label>
+        <div class="modal-actions"><button value="cancel" class="ghost-button">Cancelar</button><button value="default" class="primary-button">Salvar perfil</button></div>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
