@@ -34,6 +34,37 @@ let activeChannel = storage.get('enantato.channel', 'geral');
 let messages = storage.get('enantato.messages', seedMessages);
 let screenStream = null;
 
+let deferredInstallPrompt = null;
+const installButton = $('#installApp');
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  installButton.classList.remove('is-hidden');
+});
+
+installButton.addEventListener('click', async () => {
+  if (!deferredInstallPrompt) {
+    toast('No Chrome ou Edge, use o menu do navegador e escolha “Instalar Enantato”.', 'Instalação');
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  installButton.classList.add('is-hidden');
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  installButton.classList.add('is-hidden');
+  toast('O Enantato agora está no menu Iniciar.', 'Aplicativo instalado');
+});
+
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  installButton.classList.add('is-hidden');
+}
+
+
 function initialsAvatar(name, colorA = '#8b7bff', colorB = '#5ee7d7') {
   const initial = (name || 'E').trim().charAt(0).toUpperCase();
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="' + colorA + '"/><stop offset="1" stop-color="' + colorB + '"/></linearGradient></defs><rect width="96" height="96" rx="26" fill="url(%23g)"/><text x="48" y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="42" font-weight="800" fill="%23071014">' + initial + '</text></svg>';
