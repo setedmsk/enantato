@@ -411,3 +411,41 @@ input::placeholder, textarea::placeholder { color: #55555d; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Multiusuário */
+.login-screen { overflow: auto; }
+.login-card { margin-block: auto; }
+.auth-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: #050506;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.auth-switch button {
+  padding: 9px 12px;
+  color: #777780;
+  background: transparent;
+  border-radius: 7px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.auth-switch button:hover { color: #fff; background: #171719; }
+.auth-switch button.active {
+  color: #fff;
+  background: linear-gradient(145deg, var(--red-bright), #a81027);
+  box-shadow: 0 6px 18px var(--red-glow);
+}
+#connectionHint { min-height: 17px; color: #73737b; }
+.connection-dot[data-state="offline"] { opacity: .42; background: #6d0d1b; box-shadow: none; }
+.connection-dot[data-state="connecting"] { animation: connection-pulse 1s infinite alternate; }
+.connection-dot[data-state="online"] { background: var(--red-bright); box-shadow: 0 0 14px var(--red); }
+@keyframes connection-pulse { from { opacity: .35; } to { opacity: 1; } }
+
+@media (max-height: 760px) {
+  .login-screen { align-items: start; }
+  .login-card { margin-block: 70px 28px; }
+}
