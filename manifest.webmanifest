@@ -1,11 +1,29 @@
 {
+  "id": "./",
   "name": "Enantato",
   "short_name": "Enantato",
   "description": "Espaço privado para conversar, jogar e compartilhar.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#080b12",
   "theme_color": "#080b12",
   "lang": "pt-BR",
-  "icons": []
+  "categories": ["social", "entertainment", "utilities"],
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Abrir sala principal",
+      "short_name": "Sala principal",
+      "url": "./?room=principal"
+    }
+  ]
 }
