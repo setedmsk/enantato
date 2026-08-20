@@ -22,9 +22,11 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check app.js
+          node --check realtime.js
+          node --check server/src/server.mjs
           node --check scripts/prepare-dist.mjs
       - name: Validate JSON configuration
-        run: node -e "for (const file of ['package.json','manifest.webmanifest','src-tauri/tauri.conf.json']) JSON.parse(require('fs').readFileSync(file, 'utf8'))"
+        run: node -e "for (const file of ['package.json','server/package.json','manifest.webmanifest','src-tauri/tauri.conf.json']) JSON.parse(require('fs').readFileSync(file, 'utf8'))"
       - name: Prepare packaged frontend
         run: npm run prepare:dist
       - name: Check required application files
@@ -33,6 +35,7 @@ jobs:
           test -s dist/index.html
           test -s dist/styles.css
           test -s dist/app.js
+          test -s dist/realtime.js
           test -s dist/assets/icon.svg
       - name: Check required UI hooks
         shell: bash
@@ -42,6 +45,18 @@ jobs:
           grep -q 'getDisplayMedia' app.js
           grep -q 'beforeinstallprompt' app.js
           grep -q 'profileModal' app.js
+          grep -q 'RTCPeerConnection' realtime.js
+      - name: Smoke test multiuser server
+        shell: bash
+        run: |
+          PORT=8799 DATA_DIR="$RUNNER_TEMP/enantato-data" node server/src/server.mjs &
+          server_pid=$!
+          trap 'kill $server_pid' EXIT
+          for attempt in {1..20}; do
+            curl --fail --silent http://127.0.0.1:8799/health && break
+            sleep 0.25
+          done
+          curl --fail --silent http://127.0.0.1:8799/api/config | grep -q '"apiVersion":1'
 
   desktop:
     runs-on: windows-latest
