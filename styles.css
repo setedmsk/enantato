@@ -99,6 +99,11 @@ input::placeholder, textarea::placeholder { color: #566074; }
 .search-button span { font-size: 9px; }
 .share-button { padding: 9px 13px; font-size: 10px; border-radius: 9px; }
 
+.install-button { height: 36px; padding: 0 12px; border-radius: 9px; color: #cbd4e2; background: #1a2230; border: 1px solid var(--line); font-size: 10px; font-weight: 800; }
+.install-button:hover { color: var(--cyan); border-color: rgba(94,231,215,.28); background: rgba(94,231,215,.07); }
+.install-button span { color: var(--cyan); font-size: 14px; }
+
+
 .stage { padding: 16px 20px 0; background: #090d14; border-bottom: 1px solid var(--line); }
 .stage-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .stage-head > div { display: flex; align-items: center; gap: 8px; }
@@ -199,6 +204,8 @@ input::placeholder, textarea::placeholder { color: #566074; }
   .content { height: 100dvh; }
   .topbar { padding: 0 12px; }
   .search-button, .top-actions > .icon-button { display: none; }
+  .install-button { width: 36px; padding: 0; font-size: 0; }
+  .install-button span { font-size: 15px; }
   .share-button { font-size: 0; }
   .share-button span { font-size: 15px; }
   .welcome-card { grid-template-columns: 1fr; }
