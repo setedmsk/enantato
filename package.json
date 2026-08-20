@@ -1,0 +1,15 @@
+{
+  "name": "enantato",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cliente web e desktop do Enantato.",
+  "scripts": {
+    "prepare:dist": "node scripts/prepare-dist.mjs",
+    "tauri": "tauri",
+    "desktop:icons": "tauri icon assets/icon.svg",
+    "desktop:build": "npm run desktop:icons && tauri build -- --bundles nsis"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}
