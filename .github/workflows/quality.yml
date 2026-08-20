@@ -46,17 +46,16 @@ jobs:
           grep -q 'beforeinstallprompt' app.js
           grep -q 'profileModal' app.js
           grep -q 'RTCPeerConnection' realtime.js
-      - name: Smoke test multiuser server
-        shell: bash
+      - name: Test multiuser server
+        run: node server/tests/smoke.mjs
+      - name: Validate Docker deployment
+        env:
+          APP_DOMAIN: enantato.example.com
+          APP_ORIGIN: https://enantato.example.com
+          ICE_SERVERS: '[{"urls":"stun:stun.l.google.com:19302"}]'
         run: |
-          PORT=8799 DATA_DIR="$RUNNER_TEMP/enantato-data" node server/src/server.mjs &
-          server_pid=$!
-          trap 'kill $server_pid' EXIT
-          for attempt in {1..20}; do
-            curl --fail --silent http://127.0.0.1:8799/health && break
-            sleep 0.25
-          done
-          curl --fail --silent http://127.0.0.1:8799/api/config | grep -q '"apiVersion":1'
+          docker compose config --quiet
+          docker build --file server/Dockerfile --tag enantato-server:test .
 
   desktop:
     runs-on: windows-latest
