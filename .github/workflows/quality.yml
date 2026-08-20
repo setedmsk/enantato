@@ -1,0 +1,64 @@
+name: Quality
+
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check scripts/prepare-dist.mjs
+      - name: Validate JSON configuration
+        run: node -e "for (const file of ['package.json','manifest.webmanifest','src-tauri/tauri.conf.json']) JSON.parse(require('fs').readFileSync(file, 'utf8'))"
+      - name: Prepare packaged frontend
+        run: npm run prepare:dist
+      - name: Check required application files
+        shell: bash
+        run: |
+          test -s dist/index.html
+          test -s dist/styles.css
+          test -s dist/app.js
+          test -s dist/assets/icon.svg
+      - name: Check required UI hooks
+        shell: bash
+        run: |
+          grep -q 'id="shareScreen"' index.html
+          grep -q 'id="installApp"' index.html
+          grep -q 'getDisplayMedia' app.js
+          grep -q 'beforeinstallprompt' app.js
+          grep -q 'profileModal' app.js
+
+  desktop:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/*"
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install desktop dependencies
+        run: npm install
+      - name: Generate native icons
+        run: npm run desktop:icons
+      - name: Prepare packaged frontend
+        run: npm run prepare:dist
+      - name: Check desktop crate
+        run: cargo check --manifest-path src-tauri/Cargo.toml

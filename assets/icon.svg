@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Enantato</title>
+  <desc id="desc">Símbolo E em verde água sobre fundo escuro.</desc>
+  <defs>
+    <linearGradient id="background" x1="48" y1="32" x2="464" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171e2b"/><stop offset="1" stop-color="#080b12"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="138" y1="120" x2="376" y2="392" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#bafff7"/><stop offset=".52" stop-color="#5ee7d7"/><stop offset="1" stop-color="#7df0bc"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feColorMatrix in="blur" values="0 0 0 0 0.37 0 0 0 0 0.91 0 0 0 0 0.84 0 0 0 .35 0"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#background)"/>
+  <path d="M98 106c0-17.7 14.3-32 32-32h252c17.7 0 32 14.3 32 32v300c0 17.7-14.3 32-32 32H130c-17.7 0-32-14.3-32-32V106Z" fill="none" stroke="#ffffff" stroke-opacity=".06" stroke-width="4"/>
+  <g filter="url(#glow)" fill="url(#accent)">
+    <path d="M156 146c0-15.5 12.5-28 28-28h168c15.5 0 28 12.5 28 28s-12.5 28-28 28H212v54h116c15.5 0 28 12.5 28 28s-12.5 28-28 28H212v54h140c15.5 0 28 12.5 28 28s-12.5 28-28 28H184c-15.5 0-28-12.5-28-28V146Z"/>
+    <circle cx="377" cy="256" r="19"/>
+  </g>
+</svg>
