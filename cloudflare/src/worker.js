@@ -274,7 +274,7 @@ export class EnantatoServer {
     await this.ctx.storage.put('session:' + token, {
       userId,
       expiresAt: Date.now() + SESSION_TTL_MS
-    }, { expiration: Math.floor((Date.now() + SESSION_TTL_MS) / 1000) });
+    });
     return token;
   }
 
