@@ -1,61 +1,55 @@
 # Enantato
 
-Uma plataforma privada para grupos de amigos conversarem, organizarem comunidades e compartilharem tela com alta qualidade.
+Uma plataforma privada para grupos de amigos conversarem, personalizarem perfis e compartilharem tela com WebRTC. O cliente usa uma identidade visual preta e vermelha e pode ser instalado como PWA ou aplicativo Windows.
 
-> Primeira entrega em desenvolvimento. A interface desta branch já é navegável; voz e transmissão multiusuário serão conectadas à infraestrutura WebRTC nas próximas etapas.
+## O que funciona
 
-## O que funciona nesta entrega
+- criação de conta e login com senha;
+- sessões e dados persistentes no servidor;
+- perfis com nome, emoji, status, bio, avatar GIF e banner GIF por URL;
+- mensagens persistentes separadas por canal;
+- presença online em tempo real;
+- sinalização WebRTC por WebSocket;
+- compartilhamento de aba, janela ou monitor;
+- perfis de captura de 720p30 até 4K60, conforme navegador, tela e conexão;
+- instalação como PWA;
+- instalador Windows compilado remotamente com Tauri;
+- validação automática do cliente, servidor Node, Worker Cloudflare, Docker e desktop.
 
-- entrada com nome e emoji de status;
-- perfil persistente com avatar GIF, banner GIF, bio e status;
-- navegação entre servidores, canais de texto e salas de voz;
-- mensagens locais separadas por canal;
-- captura real de aba, janela ou monitor;
-- opções de 720p30, 1080p60, 1440p60 e 4K60;
-- layout responsivo;
-- instalação como PWA e shell offline;
-- validação automática do JavaScript no GitHub Actions.
+## Abrir no computador de cada amigo
 
-## Como cada amigo instala
+A versão web fica em:
 
-### Aplicativo web
+[https://setedmsk.github.io/enantato/](https://setedmsk.github.io/enantato/)
 
-Depois da publicação HTTPS, cada pessoa abre o endereço no Chrome ou Edge e usa o botão **Instalar**. O Enantato passa a aparecer no menu Iniciar e abre em uma janela própria. As atualizações do frontend são automáticas.
+No Chrome ou Edge, use o botão **Instalar** para abrir o Enantato como um aplicativo separado. Cada amigo cria o próprio usuário e escolhe seu perfil.
 
-### Aplicativo Windows
+Para gerar o instalador Windows, crie uma versão `app-v*`. A workflow `Desktop release` compila tudo nos servidores do GitHub e cria um Release rascunho com o instalador NSIS. Nenhum build precisa ser feito no computador local.
 
-O workflow `Desktop release` compila o mesmo cliente com Tauri em um servidor Windows do GitHub Actions. Ele gera um instalador NSIS para o usuário atual, sem exigir acesso de administrador.
+## Backend central gratuito
 
-Ao criar uma versão `app-v*`, o workflow cria um GitHub Release rascunho contendo o instalador. Nenhum build precisa acontecer no computador de trabalho.
+O backend recomendado está em `cloudflare/` e usa Cloudflare Workers, Durable Objects, armazenamento persistente e WebSockets hibernáveis. O servidor Node em `server/` continua disponível como alternativa Docker/self-hosted.
 
-### Teste rápido
+A configuração completa está em [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md).
 
-A aplicação web não exige instalação ou build. Sirva os arquivos por HTTPS ou por um servidor web e abra `index.html`.
-
-O navegador exige contexto seguro para compartilhamento de tela. Depois que o PR for aprovado, o frontend poderá ser publicado gratuitamente pelo GitHub Pages.
-
-## Limite atual
-
-O compartilhamento desta entrega mostra uma prévia real da tela no próprio cliente. Para que amigos recebam a transmissão, a próxima etapa adicionará API, autenticação multiusuário e LiveKit self-hosted.
-
-Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) para a arquitetura completa e a sequência de implementação.
+Depois do primeiro deploy, coloque a URL `workers.dev` em `runtime-config.js`. O site e o aplicativo Windows passarão a usar o mesmo servidor automaticamente.
 
 ## Estrutura
 
 ```text
-index.html                 interface e marcação
-styles.css                identidade visual responsiva
-app.js                    perfil, mensagens e captura de tela
-manifest.webmanifest      instalação como aplicativo
-service-worker.js         shell offline
-docs/ARCHITECTURE.md      arquitetura multiusuário
-assets/icon.svg            identidade do aplicativo
-package.json               comandos de empacotamento
-scripts/prepare-dist.mjs   prepara o frontend para desktop
-src-tauri/                 cliente e instalador Windows
-.github/workflows/        validação e releases remotos
+index.html                         interface
+styles.css                        identidade visual
+app.js                            UI, perfil e captura de tela
+realtime.js                       autenticação, chat, WebSocket e WebRTC
+runtime-config.js                 endereço público do backend
+cloudflare/src/worker.js          backend gratuito central
+cloudflare/wrangler.jsonc         configuração Cloudflare
+server/                            backend Node/Docker alternativo
+src-tauri/                         aplicativo e instalador Windows
+.github/workflows/                qualidade, deploy e releases
+docs/                              arquitetura e operação
 ```
 
 ## Privacidade
 
-Nenhuma senha, token ou segredo deve ser versionado. Nesta etapa, perfil e mensagens de demonstração ficam apenas no `localStorage` do navegador.
+Senhas são derivadas antes de serem armazenadas. Tokens da Cloudflare e outros segredos ficam somente nos Secrets do GitHub e nunca devem ser adicionados ao repositório. O compartilhamento de tela é ponto a ponto; apenas a sinalização da conexão passa pelo backend.
