@@ -25,8 +25,9 @@
   const peers = new Map();
 
   const savedServer = localStorage.getItem('enantato.server') || '';
+  const configuredServer = String(window.ENANTATO_CONFIG?.serverUrl || '').trim();
   const hostedHere = !location.hostname.endsWith('github.io');
-  serverInput.value = savedServer || (hostedHere ? location.origin : '');
+  serverInput.value = savedServer || configuredServer || (hostedHere ? location.origin : '');
 
   function baseUrl() {
     return serverInput.value.trim().replace(/\/+$/, '');
