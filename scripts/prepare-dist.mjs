@@ -10,6 +10,7 @@ const files = [
   'index.html',
   'styles.css',
   'app.js',
+  'realtime.js',
   'manifest.webmanifest',
   'service-worker.js'
 ];

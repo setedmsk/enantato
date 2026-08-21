@@ -24,14 +24,27 @@
       <span class="eyebrow">SEU ESPAÇO. SUAS REGRAS.</span>
       <h1 id="loginTitle">Entre para encontrar sua turma.</h1>
       <p>Uma casa digital privada para conversar, assistir e compartilhar em alta qualidade.</p>
-      <label>Como quer ser chamado?
-        <input id="loginName" autocomplete="nickname" maxlength="24" placeholder="Seu nome" required>
+      <div class="auth-switch" aria-label="Modo de autenticação">
+        <button class="active" id="loginMode" type="button">Entrar</button>
+        <button id="registerMode" type="button">Criar conta</button>
+      </div>
+      <label>Servidor da turma
+        <input id="serverUrl" type="url" autocomplete="url" placeholder="https://servidor.seudominio.com" required>
+      </label>
+      <label>Usuário
+        <input id="loginName" autocomplete="username" maxlength="24" pattern="[a-zA-Z0-9_.-]{3,24}" placeholder="seu_usuario" required>
+      </label>
+      <label>Senha
+        <input id="loginPassword" type="password" autocomplete="current-password" minlength="6" maxlength="128" placeholder="Sua senha" required>
+      </label>
+      <label class="is-hidden" id="displayNameLabel">Nome de exibição
+        <input id="registerDisplayName" autocomplete="nickname" maxlength="24" placeholder="Como seus amigos verão você">
       </label>
       <label>Emoji do status
         <div class="status-input"><input id="loginEmoji" maxlength="4" value="🎮"><span>Disponível</span></div>
       </label>
-      <button class="primary-button" type="submit">Entrar no espaço <span>→</span></button>
-      <small>Este protótipo guarda o perfil apenas neste navegador.</small>
+      <button class="primary-button" type="submit"><span id="authSubmitLabel">Entrar no espaço</span><span>→</span></button>
+      <small id="connectionHint">Informe o servidor privado da sua turma.</small>
     </form>
   </section>
 
@@ -176,5 +189,6 @@
 
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
   <script src="app.js" defer></script>
+  <script src="realtime.js" defer></script>
 </body>
 </html>
