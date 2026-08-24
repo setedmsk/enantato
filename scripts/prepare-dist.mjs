@@ -11,6 +11,7 @@ const files = [
   'styles.css',
   'app.js',
   'realtime.js',
+  'runtime-config.js',
   'manifest.webmanifest',
   'service-worker.js'
 ];

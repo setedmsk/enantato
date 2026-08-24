@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "enantato-server",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-08-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "minify": true,
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ENANTATO",
+        "class_name": "EnantatoServer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "EnantatoServer"
+      ]
+    }
+  ],
+  "vars": {
+    "APP_ORIGINS": "https://setedmsk.github.io",
+    "ICE_SERVERS": "[{\"urls\":\"stun:stun.l.google.com:19302\"}]"
+  }
+}

@@ -1,5 +1,5 @@
-const CACHE = 'enantato-shell-v3';
-const ASSETS = ['./', './index.html', './styles.css', './app.js', './realtime.js', './manifest.webmanifest'];
+const CACHE = 'enantato-shell-v4';
+const ASSETS = ['./', './index.html', './styles.css', './app.js', './realtime.js', './runtime-config.js', './manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));

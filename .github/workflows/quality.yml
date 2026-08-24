@@ -24,9 +24,10 @@ jobs:
           node --check app.js
           node --check realtime.js
           node --check server/src/server.mjs
+          node --check cloudflare/src/worker.js
           node --check scripts/prepare-dist.mjs
       - name: Validate JSON configuration
-        run: node -e "for (const file of ['package.json','server/package.json','manifest.webmanifest','src-tauri/tauri.conf.json']) JSON.parse(require('fs').readFileSync(file, 'utf8'))"
+        run: node -e "for (const file of ['package.json','server/package.json','manifest.webmanifest','cloudflare/wrangler.jsonc','src-tauri/tauri.conf.json']) JSON.parse(require('fs').readFileSync(file, 'utf8'))"
       - name: Prepare packaged frontend
         run: npm run prepare:dist
       - name: Check required application files
@@ -36,6 +37,7 @@ jobs:
           test -s dist/styles.css
           test -s dist/app.js
           test -s dist/realtime.js
+          test -s dist/runtime-config.js
           test -s dist/assets/icon.svg
       - name: Check required UI hooks
         shell: bash
@@ -48,6 +50,8 @@ jobs:
           grep -q 'RTCPeerConnection' realtime.js
       - name: Test multiuser server
         run: node server/tests/smoke.mjs
+      - name: Validate Cloudflare Worker bundle
+        run: npx --yes wrangler@4 deploy --dry-run --config cloudflare/wrangler.jsonc --outdir /tmp/enantato-worker
       - name: Validate Docker deployment
         env:
           APP_DOMAIN: enantato.example.com
