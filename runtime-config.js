@@ -1,3 +1,3 @@
 window.ENANTATO_CONFIG = Object.freeze({
-  serverUrl: ''
+  serverUrl: 'https://enantato-server.enantato-setedmsk.workers.dev'
 });
