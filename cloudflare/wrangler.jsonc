@@ -3,10 +3,12 @@
   "name": "enantato-server",
   "main": "src/worker.js",
   "compatibility_date": "2026-08-21",
+  "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "minify": true,
   "observability": {
-    "enabled": true
+    "enabled": true,
+    "head_sampling_rate": 1
   },
   "durable_objects": {
     "bindings": [
