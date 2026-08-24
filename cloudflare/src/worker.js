@@ -34,7 +34,7 @@ async function passwordRecord(password, salt = randomHex(16)) {
     name: 'PBKDF2',
     hash: 'SHA-256',
     salt: encoder.encode(salt),
-    iterations: 120000
+    iterations: 100000
   }, key, 256);
   return { salt, hash: bytesToHex(bits) };
 }
